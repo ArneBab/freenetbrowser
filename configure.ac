@@ -2,7 +2,7 @@ dnl run `autoreconf -i` to generate a configure script.
 dnl Then run ./configure to generate a Makefile.
 dnl Finally run make to generate the project.
 
-AC_INIT([freenetbrowser], [0.0.0], [Draketo])
+AC_INIT([freenetbrowser], [0.0.0], [Arne Babenhauserheide])
 # Check for programs I need for my build
 AC_CANONICAL_TARGET
 # Run automake, GNU style, so we need NEWS, ChangeLog and README
@@ -14,4 +14,5 @@ AC_CONFIG_FILES([Makefile])
 AC_CONFIG_LINKS([AUTHORS.in:AUTHORS.in])
 
 # link the file to preprocess with the configured datapaths
-AC_CONFIG_LINKS([freenetbrowser.in:freenetbrowser.in])AC_OUTPUT
+AC_CONFIG_LINKS([freenetbrowser.in:freenetbrowser.in])
+AC_OUTPUT
