@@ -191,7 +191,7 @@ BROWSER=$(command -v icecat || command -v waterfox || command -v firefox)
 if test -z $@; then
     $BROWSER --profile ${PROFILE_DIR} --no-remote --new-instance http://freenet.local
 elif test x"${1:0:4}" = x"USK@" || test x"${1:0:4}" = x"SSK@" || test x"${1:0:4}" = x"CHK@"; then
-    $BROWSER --profile ~/.config/freenet/firefox-profile --no-remote --new-instance http://freenet.local/$1
+    $BROWSER --profile ${PROFILE_DIR} --no-remote --new-instance http://freenet.local/$1
 else
     $BROWSER --profile ${PROFILE_DIR} --no-remote --new-instance $@
 fi
