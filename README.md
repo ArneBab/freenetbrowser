@@ -1,4 +1,4 @@
-freenetbrowser - tagline of your project
+freenetbrowser - easy, secured Freenet usage for *nix
 ======================================
 
 Description of freenetbrowser.
