@@ -2,7 +2,7 @@ dnl run `autoreconf -i` to generate a configure script.
 dnl Then run ./configure to generate a Makefile.
 dnl Finally run make to generate the project.
 
-AC_INIT([freenetbrowser], [0.0.0], [Arne Babenhauserheide])
+AC_INIT([freenetbrowser], [0.0.1], [Arne Babenhauserheide])
 # Check for programs I need for my build
 AC_CANONICAL_TARGET
 # Run automake, GNU style, so we need NEWS, ChangeLog and README
