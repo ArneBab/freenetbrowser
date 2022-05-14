@@ -129,7 +129,13 @@ if ! test -d $DIRECTORY && ! test -z $ARG_INSTALL; then
     # ip 127.x.y.z with x and y 0-255 and z 1-254.
     IP=127.$(($RANDOM % 256)).$(($RANDOM % 256)).$((1 + ($RANDOM % 253)))
     (echo fproxy.bindTo=$IP
-     echo fproxy.port=$PORT) > ${DIRECTORY}/freenet.ini
+     echo fproxy.port=$PORT
+     echo fproxy.hasCompletedWizard=true
+     echo node.opennet.enabled=true
+     echo node.outputBandwidthLimit=65536
+     echo security-levels.networkThreatLevel=NORMAL
+     echo 'pluginmanager.loadplugin=Freereader;KeyUtils;UPnP;Sharesite;KeepAlive'
+    ) > ${DIRECTORY}/freenet.ini
     (cd $DIRECTORY && ./run.sh start)
 fi
 
