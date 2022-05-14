@@ -10,6 +10,13 @@ See ChangeLog or the history for detailed changes.
 
 $ freenetbrowser [options] [arguments]
 
+## Requirements
+
+- curl or wget
+- gnupg for installing
+- Java openjdk 9 or later
+- icecat, waterfox or firefox
+
 ## Install
 
 $ ./bootstrap.sh && make install
