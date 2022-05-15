@@ -1,4 +1,4 @@
-freenetbrowser - easy, secured Freenet usage for *nix
+freenetbrowser - easy, secured Freenet opennet usage for *nix
 ======================================
 
 Description of freenetbrowser.
