@@ -163,6 +163,7 @@ fi
 # if the profile does not exist yet, create it
 if ! test -d ${PROFILE_DIR}; then
     mkdir -p ${PROFILE_DIR}
+    # setup freenet as proxy and optimize settings
     cat > ${PROFILE_DIR}/prefs.js <<EOF
 //Firefox Default Settings
 //set proxy server settings
@@ -187,6 +188,10 @@ user_pref("network.http.max-urgent-start-excessive-connections-per-host", 100);
 user_pref("network.http.tcp_keepalive.long_lived_connections", false);
 user_pref("network.http.tcp_keepalive.short_lived_connections", false);
 user_pref("network.proxy.share_proxy_settings", true);
+EOF
+    # disable all extensions
+    cat > ${PROFILE_DIR}/extensions.json <<EOF
+{"schemaVersion":33,"addons":[]}
 EOF
 fi
 
