@@ -189,10 +189,6 @@ user_pref("network.http.tcp_keepalive.long_lived_connections", false);
 user_pref("network.http.tcp_keepalive.short_lived_connections", false);
 user_pref("network.proxy.share_proxy_settings", true);
 EOF
-    # disable all extensions
-    cat > ${PROFILE_DIR}/extensions.json <<EOF
-{"schemaVersion":33,"addons":[]}
-EOF
 fi
 
 BROWSER=$(command -v icecat || command -v waterfox || command -v firefox)
