@@ -1,7 +1,9 @@
 freenetbrowser - easy, secured Freenet opennet usage for *nix
 ======================================
 
-Description of freenetbrowser.
+Access content in Freenet with minimal fuss:
+Installs Freenet if needed, creates a secured browser-profile
+to minimize risk of leaking information.
 
 See NEWS for user-visible changes.
 See ChangeLog or the history for detailed changes.
