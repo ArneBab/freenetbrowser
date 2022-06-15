@@ -139,17 +139,16 @@ if ! test -d $DIRECTORY && ! test -z $ARG_INSTALL; then
     (cd $DIRECTORY && ./run.sh start)
 fi
 
-# ensure that Freenet is running, if the directory exists
-if test -d ${DIRECTORY}; then
-    (cd "${DIRECTORY}" && (./run.sh status 2>/dev/null >/dev/null || ./run.sh start))
-fi
-
 # if the directory was given, use its port to identify a custom profile
 if ! test -z ${ARG_DIRECTORY}; then
     # get the IP and PORT from the Freenet directory
     IP=$(grep fproxy.bindTo ${DIRECTORY}/freenet.ini | sed s/.*=//)
     PORT=$(grep fproxy.port ${DIRECTORY}/freenet.ini | sed s/.*=//)
     PROFILE_DIR=${PROFILE_DIR}-${PORT}
+# otherwise get IP and PORT from the profile dir
+elif test -d "${PROFILE_DIR}"; then
+    IP=$(grep 'user_pref("network.proxy.http", ' "${PROFILE_DIR}/prefs.js" | sed 's/^.*, "//;s,".*$,,');
+    PORT=$(grep 'user_pref("network.proxy.http_port", ' "${PROFILE_DIR}/prefs.js" | sed 's/^.*, //;s,).*$,,');
 fi
 
 # Default IP and PORT as fallback
@@ -158,6 +157,16 @@ if test -z $IP; then
 fi
 if test -z $PORT; then
     PORT=8888
+fi
+
+# ensure that Freenet is running, if the directory exists and the
+# detected IP and PORT do not yield the freenet diagnostics page
+if test -d ${DIRECTORY}; then
+    if ! curl -s http://$IP:$PORT/diagnostic/ | grep "Freenet Version" -q; then
+        if ! curl -s https://$IP:$PORT/diagnostic/ | grep "Freenet Version" -q; then
+            (cd "${DIRECTORY}" && (./run.sh status 2>/dev/null >/dev/null || ./run.sh start))
+        fi
+    fi
 fi
 
 # if the profile does not exist yet, create it
