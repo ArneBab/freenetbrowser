@@ -31,7 +31,8 @@ See ChangeLog or the history for detailed changes.
 
 ## Requirements
 
-- curl or wget
+- curl
+- wget
 - gnupg for installing
 - Java openjdk 9 or later
 - icecat, waterfox or firefox
