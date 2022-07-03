@@ -51,6 +51,16 @@ Also see
 
 For details on installing a release, see INSTALL
 
+### Install with dependencies on debian and derivates
+
+    sudo apt install git autoconf automake openjdk-17-jdk wget grep sed gnupg curl firefox-esr
+    git clone https://github.com/freenet/browser
+    (cd browser && ./bootstrap.sh --prefix=$HOME/.local && make install)
+    # install Freenet if needed
+    ~/.local/bin/freenetbrowser --install
+
+
+
 ## Contributors
 
 See AUTHORS
