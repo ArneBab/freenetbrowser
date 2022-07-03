@@ -142,8 +142,8 @@ fi
 
 # if the directory was given, use its port to identify a custom profile
 if ! test -z ${ARG_DIRECTORY}; then
-    # get the IP and PORT from the Freenet directory
-    IP=$(grep fproxy.bindTo ${DIRECTORY}/freenet.ini | sed s/.*=//)
+    # get the IP and PORT from the Freenet directory; the IP is only the first configured one (split at ,)
+    IP=$(grep fproxy.bindTo ${DIRECTORY}/freenet.ini | sed s/.*=// | sed s/,.*//)
     PORT=$(grep fproxy.port ${DIRECTORY}/freenet.ini | sed s/.*=//)
     PROFILE_DIR=${PROFILE_DIR}-${PORT}
 # otherwise get IP and PORT from the profile dir
