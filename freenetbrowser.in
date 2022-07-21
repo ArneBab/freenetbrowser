@@ -160,6 +160,9 @@ if test -z $PORT; then
     PORT=8888
 fi
 
+# lengthen possible shortened port
+PORT=$(echo $PORT | sed 's/k/000/')
+
 # ensure that Freenet is running, if the directory exists and the
 # detected IP and PORT do not yield the freenet diagnostics page
 if test -d ${DIRECTORY}; then
