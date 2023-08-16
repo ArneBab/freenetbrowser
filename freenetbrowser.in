@@ -206,12 +206,50 @@ fi
 
 BROWSER=$(command -v icecat || command -v waterfox || command -v firefox)
 
+# install a URI scheme handler if it is not installed yet
+APPLICATIONS_FOLDER="$HOME/.local/share/applications"
+DESKTOPFILENAME="freenetbrowser.desktop"
+if ! test -e "$APPLICATIONS_FOLDER/$DESKTOPFILENAME"; then
+    mkdir -p "$APPLICATIONS_FOLDER" 2>/dev/null
+    cat > "$APPLICATIONS_FOLDER/$DESKTOPFILENAME" <<EOF
+[Desktop Entry]
+Version=0.1
+Type=Application
+Name=Freenet Browser handler
+Exec=freenetbrowser %u
+StartupNotify=false
+MimeType=x-scheme-handler/ext+freenet;x-scheme-handler/ext+hypha;x-scheme-handler/ext+hyphanet;x-scheme-handler/web+freenet;x-scheme-handler/web+hypha;x-scheme-handler/web+hyphanet;x-scheme-handler/freenet;x-scheme-handler/hypha;x-scheme-handler/hyphanet
+Comment=Launch in a a custom browser profile with a secured Freenet / Hyphanet proxy
+EOF
+    xdg-mime default freenetbrowser.desktop x-scheme-handler/web+freenet
+    xdg-mime default freenetbrowser.desktop x-scheme-handler/web+hypha
+    update-desktop-database "$APPLICATIONS_FOLDER"
+fi
+
+function is-freenet-prefix () {
+    for i in USK KSK CHK SSK; do
+        if test x"${1:0:4}" = x"${i}@" \
+                || test x"${1:0:12}" = x"freenet:${i}@" \
+                || test x"${1:0:16}" = x"web+freenet:${i}@" \
+                || test x"${1:0:16}" = x"ext+freenet:${i}@" \
+                || test x"${1:0:10}" = x"hypha:${i}@" \
+                || test x"${1:0:14}" = x"web+hypha:${i}@" \
+                || test x"${1:0:14}" = x"ext+hypha:${i}@" \
+                || test x"${1:0:13}" = x"hyphanet:${i}@" \
+                || test x"${1:0:17}" = x"web+hyphanet:${i}@" \
+                || test x"${1:0:17}" = x"ext+hyphanet:${i}@"; then
+            return 0
+        fi
+    done
+    return 1
+}
+
 # actually start the browser
 # if the first argument is zero, start the default page.
 if test -z $@; then
     $BROWSER --profile ${PROFILE_DIR} --no-remote --new-instance http://freenet.local
-elif test x"${1:0:4}" = x"USK@" || test x"${1:0:4}" = x"SSK@" || test x"${1:0:4}" = x"CHK@"; then
-    $BROWSER --profile ${PROFILE_DIR} --no-remote --new-instance http://freenet.local/$1
+elif is-freenet-prefix "$1"; then
+    $BROWSER --profile ${PROFILE_DIR} --no-remote --new-instance http://freenet.local/"$1"
 else
     $BROWSER --profile ${PROFILE_DIR} --no-remote --new-instance $@
 fi
