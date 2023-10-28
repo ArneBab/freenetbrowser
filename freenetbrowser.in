@@ -116,9 +116,12 @@ if ! test -d $DIRECTORY && ! test -z $ARG_INSTALL; then
     TMPDIR=$(mktemp -d)
     curl https://freenetproject.org/assets/keyring.gpg | gpg --homedir=${TMPDIR} --import -
     if ! gpg --homedir=${TMPDIR} --verify new_installer_offline.jar.sig; then
-        echo Freenet installer signature new_installer_offline.jar.sig fails to verify, possibly corrupted. Exiting.
-        rm -r "${TMPDIR}"
-        exit 1
+        echo Freenet installer signature new_installer_offline.jar.sig fails to verify. Please check the error above.
+        read -p "Continue? [yN] " yn
+        case $yn in
+            [Yy] ) echo continuing;;
+            * ) rm -r "${TMPDIR}"; echo exiting; exit 1;;
+        esac
     fi
     rm -r "${TMPDIR}"
     # install Freenet
